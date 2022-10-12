@@ -31,13 +31,10 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET).hasRole("USER")
-		 	.antMatchers("/productos/v1/*").hasRole("ADMIN")
-		 	.and()
-		 	.httpBasic()
-		 	.and()
-		 	.csrf()
-		 	.disable();
+		.antMatchers("/producto/v1/listar").permitAll()
+		.antMatchers("/item/v1/listar").permitAll()
+		.antMatchers("/producto/v1/**").access("hasRole('ADMIN')")
+		.and().httpBasic().and().csrf().disable();
 	}
 	
 	@Bean public PasswordEncoder Encoder() {
